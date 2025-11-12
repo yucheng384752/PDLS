@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PDLS - 專案開發日誌紀錄系統，支援團隊化開發的專案管理與紀錄系統" />
+  <meta name="keywords" content="專案管理,開發日誌,工時紀錄,團隊協作" />
+  <meta name="author" content="PDLS Team" />
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="PDLS - 專案開發日誌系統" />
+  <meta property="og:description" content="支援團隊化開發的專案管理與紀錄系統" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="zh_TW" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  
+  <!-- Preconnect to improve performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <!-- Google Fonts - Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Theme color for mobile browsers -->
+  <meta name="theme-color" content="#3b82f6" />
+  <meta name="msapplication-TileColor" content="#3b82f6" />
+  
+  <!-- Disable zoom on mobile (optional, for better UX) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  
+  <title>PDLS - 專案開發日誌系統</title>
+</head>
+<body>
+  <!-- Root element for React app -->
+  <div id="root"></div>
+  
+  <!-- Fallback content for users with JavaScript disabled -->
+  <noscript>
+    <div style="
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      color: #111827;
+      text-align: center;
+      padding: 2rem;
+    ">
+      <h1 style="font-size: 2rem; margin-bottom: 1rem; color: #3b82f6;">
+        🚀 PDLS
+      </h1>
+      <h2 style="font-size: 1.5rem; margin-bottom: 2rem;">
+        專案開發日誌系統
+      </h2>
+      <p style="font-size: 1.1rem; margin-bottom: 1rem; max-width: 600px; line-height: 1.6;">
+        抱歉，本應用程式需要啟用 JavaScript 才能正常運作。
+      </p>
+      <p style="color: #6b7280; margin-bottom: 2rem;">
+        請在您的瀏覽器設定中啟用 JavaScript，然後重新載入此頁面。
+      </p>
+      <div style="
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        border-radius: 8px;
+        padding: 1.5rem;
+        max-width: 500px;
+      ">
+        <h3 style="color: #1e40af; margin-bottom: 1rem;">如何啟用 JavaScript：</h3>
+        <ul style="text-align: left; color: #374151; line-height: 1.8;">
+          <li><strong>Chrome/Edge:</strong> 設定 → 隱私權和安全性 → 網站設定 → JavaScript</li>
+          <li><strong>Firefox:</strong> about:config → javascript.enabled</li>
+          <li><strong>Safari:</strong> 偏好設定 → 安全性 → 啟用 JavaScript</li>
+        </ul>
+      </div>
+    </div>
+  </noscript>
+  
+  <!-- Module script for modern browsers -->
+  <script type="module" src="/src/main.tsx"></script>
+  
+  <!-- Error handling script -->
+  <script>
+    window.addEventListener('error', function(e) {
+      console.error('Global error:', e.error);
+      // You could send this to your error tracking service
+    });
+    
+    window.addEventListener('unhandledrejection', function(e) {
+      console.error('Unhandled promise rejection:', e.reason);
+      // You could send this to your error tracking service
+    });
+  </script>
+</body>
+</html>

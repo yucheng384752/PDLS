@@ -524,3 +524,33 @@ class AuthService:
             user.full_name or user.username,
             reset_url
         )
+    
+    async def get_user_from_token(self, token: str) -> Optional[User]:
+        """
+        從JWT令牌獲取用戶
+        
+        Args:
+            token: JWT訪問令牌
+            
+        Returns:
+            用戶對象，如果令牌無效則返回None
+        """
+        try:
+            payload = self.verify_token(token, "access")
+            user_id = payload.get("sub")
+            
+            if not user_id:
+                return None
+            
+            # 這裡需要數據庫會話，但由於這是依賴注入的方法，
+            # 我們需要在權限檢查中獨立處理數據庫查詢
+            return await self._get_user_by_id(int(user_id))
+            
+        except (JWTError, ValueError):
+            return None
+    
+    async def _get_user_by_id(self, user_id: int) -> Optional[User]:
+        """根據ID獲取用戶（需要在調用時提供數據庫會話）"""
+        # 注意：這個方法需要在實際使用時重新設計，因為需要數據庫會話
+        # 目前作為占位符，實際實現會在權限中間件中處理
+        pass

@@ -1,0 +1,244 @@
+/**
+ * User Page Styles
+ */
+
+.user-page-container {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: calc(100vh - 2rem);
+}
+
+.user-page-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: var(--surface-card);
+  overflow: hidden;
+}
+
+.user-page-header {
+  padding: 2rem 2rem 1rem;
+  background: linear-gradient(135deg, var(--primary-100), var(--primary-50));
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.user-page-header h2 {
+  color: var(--primary-800);
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.user-page-header .text-muted {
+  color: var(--text-color-secondary);
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.user-tabs {
+  background: var(--surface-card);
+}
+
+.user-tabs .p-tabview-nav {
+  background: var(--surface-ground);
+  border: none;
+  border-bottom: 1px solid var(--surface-border);
+  margin: 0;
+  padding: 0 2rem;
+}
+
+.user-tabs .p-tabview-nav li {
+  margin-right: 0;
+  border: none;
+}
+
+.user-tabs .p-tabview-nav li .p-tabview-nav-link {
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--text-color-secondary);
+  padding: 1.25rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+
+.user-tabs .p-tabview-nav li .p-tabview-nav-link:hover {
+  background: var(--surface-100);
+  color: var(--primary-color);
+}
+
+.user-tabs .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: transparent;
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+.user-tabs .p-tabview-nav li .p-tabview-nav-link .p-tabview-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-tabs .p-tabview-panels {
+  background: var(--surface-card);
+  padding: 0;
+  border: none;
+}
+
+.tab-content {
+  padding: 2rem;
+  min-height: 500px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-page-container {
+    padding: 0.5rem;
+  }
+  
+  .user-page-header {
+    padding: 1.5rem 1rem 1rem;
+  }
+  
+  .user-page-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .user-tabs .p-tabview-nav {
+    padding: 0 1rem;
+    overflow-x: auto;
+  }
+  
+  .user-tabs .p-tabview-nav li .p-tabview-nav-link {
+    padding: 1rem 1rem;
+    white-space: nowrap;
+  }
+  
+  .tab-content {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-page-container {
+    padding: 0.25rem;
+  }
+  
+  .user-page-header {
+    padding: 1rem 0.75rem 0.75rem;
+  }
+  
+  .user-page-header h2 {
+    font-size: 1.25rem;
+  }
+  
+  .user-page-header .text-muted {
+    font-size: 0.875rem;
+  }
+  
+  .user-tabs .p-tabview-nav {
+    padding: 0 0.75rem;
+  }
+  
+  .user-tabs .p-tabview-nav li .p-tabview-nav-link {
+    padding: 0.75rem 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .tab-content {
+    padding: 0.75rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .user-page-header {
+    background: linear-gradient(135deg, var(--primary-900), var(--primary-800));
+  }
+  
+  .user-page-header h2 {
+    color: var(--primary-100);
+  }
+  
+  .user-tabs .p-tabview-nav li .p-tabview-nav-link:hover {
+    background: var(--surface-700);
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .user-page-card {
+    border: 2px solid var(--surface-border);
+  }
+  
+  .user-tabs .p-tabview-nav {
+    border-bottom: 2px solid var(--surface-border);
+  }
+  
+  .user-tabs .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    border-bottom-width: 4px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .user-tabs .p-tabview-nav li .p-tabview-nav-link {
+    transition: none;
+  }
+}
+
+/* Focus States */
+.user-tabs .p-tabview-nav li .p-tabview-nav-link:focus {
+  box-shadow: inset 0 0 0 2px var(--primary-color);
+  outline: none;
+}
+
+/* Loading States */
+.tab-content.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Animation for tab content */
+.tab-content {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .user-page-container {
+    padding: 0;
+  }
+  
+  .user-page-card {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .user-page-header {
+    background: white;
+    border-bottom: 2px solid #000;
+  }
+  
+  .user-tabs .p-tabview-nav {
+    display: none;
+  }
+  
+  .tab-content {
+    padding: 1rem;
+  }
+}

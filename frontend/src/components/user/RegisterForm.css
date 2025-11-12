@@ -1,0 +1,272 @@
+/**
+ * Register Form Component Styles
+ */
+
+.register-form-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1rem;
+  position: relative;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  margin: 1rem 0;
+}
+
+.register-header {
+  margin-bottom: 2rem;
+}
+
+.register-logo {
+  color: var(--primary-color);
+}
+
+.register-form {
+  width: 100%;
+}
+
+.field {
+  position: relative;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.field .p-inputtext,
+.field .p-password,
+.field .p-dropdown {
+  width: 100%;
+}
+
+.field .p-password .p-inputtext {
+  padding-right: 3rem;
+}
+
+.p-error {
+  color: var(--red-500);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.password-strength {
+  margin-top: 0.5rem;
+}
+
+.password-strength-bar {
+  background-color: #e9ecef;
+  border-radius: 2px;
+  height: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.password-strength-indicator {
+  height: 100%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.formgrid.grid {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.formgrid.grid .col-12,
+.formgrid.grid .col-6 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(2px);
+  z-index: 1000;
+}
+
+/* Terms and Conditions Checkbox */
+.field .p-checkbox {
+  vertical-align: top;
+  margin-top: 0.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .register-form-container {
+    padding: 0.5rem;
+  }
+  
+  .register-card {
+    padding: 1.5rem;
+    margin: 0.5rem;
+  }
+  
+  .register-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .register-header p {
+    font-size: 1rem;
+  }
+  
+  .formgrid.grid .col-12.md:col-6 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-card {
+    padding: 1rem;
+  }
+  
+  .register-form .field {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .register-form-container {
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  }
+}
+
+/* Focus States */
+.p-inputtext:focus,
+.p-password:focus-within,
+.p-dropdown:focus-within {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* Button Hover Effects */
+.p-button {
+  transition: all 0.3s ease;
+}
+
+.p-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Link Styles */
+a {
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Animation for error messages */
+.p-error {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading spinner animation */
+.loading-overlay .p-progress-spinner {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Password strength colors */
+.strength-weak {
+  color: #f44336;
+}
+
+.strength-fair {
+  color: #ff9800;
+}
+
+.strength-good {
+  color: #ffeb3b;
+}
+
+.strength-strong {
+  color: #4caf50;
+}
+
+.strength-excellent {
+  color: #2196f3;
+}
+
+/* Dropdown customization */
+.p-dropdown {
+  background: white;
+}
+
+.p-dropdown:not(.p-disabled):hover {
+  border-color: var(--primary-color);
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover {
+  background-color: var(--primary-50);
+  color: var(--primary-900);
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+  background-color: var(--primary-color);
+  color: var(--primary-color-text);
+}
+
+/* Checkbox styling */
+.p-checkbox .p-checkbox-box {
+  border: 2px solid #ced4da;
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+  border-color: var(--primary-color);
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+/* Form layout improvements */
+.field.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.field.mb-4 {
+  margin-bottom: 1.5rem;
+}

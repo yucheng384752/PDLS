@@ -1,0 +1,426 @@
+/**
+ * User Management Component Styles
+ */
+
+.user-management-container {
+  padding: 1rem;
+  width: 100%;
+  max-width: none;
+}
+
+.user-management-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+/* Table Header */
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.table-title {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.search-input input {
+  min-width: 250px;
+}
+
+.role-filter,
+.status-filter {
+  min-width: 140px;
+}
+
+.create-user-btn {
+  white-space: nowrap;
+}
+
+/* User Table */
+.user-table {
+  margin-bottom: 1rem;
+}
+
+.user-table .p-datatable-header {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.user-table .p-datatable-thead > tr > th {
+  background: var(--surface-100);
+  color: var(--text-color);
+  font-weight: 600;
+  border-bottom: 2px solid var(--surface-border);
+  padding: 1rem 0.75rem;
+}
+
+.user-table .p-datatable-tbody > tr > td {
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid var(--surface-border);
+  vertical-align: middle;
+}
+
+.user-table .p-datatable-tbody > tr:hover {
+  background: var(--surface-50);
+}
+
+/* User Avatar Column */
+.user-avatar {
+  border: 2px solid var(--surface-border);
+  transition: border-color 0.3s ease;
+}
+
+.user-avatar:hover {
+  border-color: var(--primary-color);
+}
+
+/* User Name Column */
+.user-name-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.user-full-name {
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+.user-username {
+  color: var(--text-color-secondary);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+/* Role and Status Tags */
+.role-tag,
+.status-tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+}
+
+.role-tag {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Last Login Column */
+.text-success {
+  color: var(--green-600);
+  font-weight: 500;
+}
+
+.text-info {
+  color: var(--blue-600);
+  font-weight: 500;
+}
+
+.text-warning {
+  color: var(--orange-600);
+  font-weight: 500;
+}
+
+.text-muted {
+  color: var(--text-color-secondary);
+}
+
+/* Action Column */
+.user-table .p-button.p-button-rounded.p-button-text {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--text-color-secondary);
+}
+
+.user-table .p-button.p-button-rounded.p-button-text:hover {
+  background: var(--surface-100);
+  color: var(--primary-color);
+}
+
+/* Paginator */
+.p-paginator {
+  background: transparent;
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page {
+  min-width: 2.5rem;
+  height: 2.5rem;
+  margin: 0 0.125rem;
+  border-radius: 6px;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* User Profile Sidebar */
+.user-profile-sidebar {
+  background: var(--surface-card);
+}
+
+.user-profile-sidebar .p-sidebar-header {
+  background: var(--primary-color);
+  color: white;
+  padding: 1.5rem;
+}
+
+.user-profile-sidebar .p-sidebar-content {
+  padding: 0;
+}
+
+/* Loading State */
+.p-datatable-loading .p-skeleton {
+  height: 1.5rem;
+  border-radius: 4px;
+}
+
+/* Empty State */
+.p-datatable .p-datatable-emptymessage {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-color-secondary);
+  font-size: 1.1rem;
+}
+
+.p-datatable .p-datatable-emptymessage::before {
+  content: '👤';
+  display: block;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .search-input input {
+    min-width: 200px;
+  }
+  
+  .filter-controls {
+    order: 1;
+    width: 100%;
+  }
+  
+  .create-user-btn {
+    order: 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-management-container {
+    padding: 0.5rem;
+  }
+  
+  .user-management-card {
+    padding: 1rem;
+  }
+  
+  .table-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  
+  .header-left,
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .filter-controls {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .search-input input,
+  .role-filter,
+  .status-filter {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .user-profile-sidebar {
+    width: 95vw !important;
+    max-width: none !important;
+  }
+  
+  .user-table .p-datatable-thead > tr > th,
+  .user-table .p-datatable-tbody > tr > td {
+    padding: 0.75rem 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .table-title {
+    font-size: 1.25rem;
+  }
+  
+  .user-name-cell {
+    gap: 0.125rem;
+  }
+  
+  .user-full-name {
+    font-size: 0.9rem;
+  }
+  
+  .user-username {
+    font-size: 0.75rem;
+  }
+  
+  .role-tag,
+  .status-tag {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .user-management-card {
+    background: var(--surface-800);
+  }
+  
+  .user-table .p-datatable-thead > tr > th {
+    background: var(--surface-700);
+  }
+  
+  .user-table .p-datatable-tbody > tr:hover {
+    background: var(--surface-700);
+  }
+  
+  .user-avatar {
+    border-color: var(--surface-600);
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .user-table .p-datatable-thead > tr > th {
+    border-bottom-width: 3px;
+  }
+  
+  .role-tag,
+  .status-tag {
+    border: 1px solid currentColor;
+  }
+  
+  .user-avatar {
+    border-width: 3px;
+  }
+}
+
+/* Focus States */
+.user-table .p-datatable-tbody > tr:focus-within {
+  outline: 2px solid var(--primary-color);
+  outline-offset: -2px;
+}
+
+.p-button:focus {
+  box-shadow: 0 0 0 0.2rem rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* Animation for row updates */
+.user-table .p-datatable-tbody > tr.updated {
+  animation: rowUpdate 0.5s ease-out;
+}
+
+@keyframes rowUpdate {
+  0% {
+    background-color: rgba(var(--green-500-rgb), 0.2);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* Selection highlighting */
+.user-table .p-datatable-tbody > tr.p-highlight {
+  background: rgba(var(--primary-color-rgb), 0.1);
+  color: var(--primary-color);
+}
+
+.user-table .p-datatable-tbody > tr.p-highlight:hover {
+  background: rgba(var(--primary-color-rgb), 0.15);
+}
+
+/* Badge styling */
+.table-title .p-badge {
+  background: var(--primary-color);
+  color: white;
+  font-size: 0.75rem;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+}
+
+/* Menu overlay styling */
+.p-menu.p-menu-overlay {
+  min-width: 200px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.p-menu .p-menuitem-link {
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.p-menu .p-menuitem-link:hover {
+  background: var(--surface-100);
+}
+
+.p-menu .p-menuitem-link.text-red-500:hover {
+  background: rgba(var(--red-500-rgb), 0.1);
+  color: var(--red-600);
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .user-avatar,
+  .p-button,
+  .p-menuitem-link {
+    transition: none;
+  }
+  
+  .rowUpdate {
+    animation: none;
+  }
+}

@@ -1,0 +1,344 @@
+/**
+ * User Profile Component Styles
+ */
+
+.user-profile-container {
+  padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.profile-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.profile-header {
+  position: relative;
+  padding: 1rem 0 2rem;
+}
+
+.profile-name {
+  color: var(--text-color);
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem;
+}
+
+.profile-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.profile-username {
+  color: var(--text-color-secondary);
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.profile-role {
+  background: var(--primary-50);
+  color: var(--primary-600);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.profile-bio {
+  max-width: 600px;
+  margin: 1rem auto 0;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.profile-form {
+  margin-top: 1rem;
+}
+
+.profile-form .field {
+  margin-bottom: 1rem;
+}
+
+.profile-form .field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 0.875rem;
+}
+
+.profile-form .p-inputtext,
+.profile-form .p-dropdown,
+.profile-form .p-calendar,
+.profile-form .p-inputtextarea,
+.profile-form .p-password {
+  width: 100%;
+}
+
+.profile-form .p-password .p-inputtext {
+  padding-right: 3rem;
+}
+
+.field-checkbox {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.field-checkbox label {
+  margin-bottom: 0 !important;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.password-change-section {
+  background: var(--surface-50);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.password-change-section h4 {
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.password-change-section h4::before {
+  content: '';
+  width: 4px;
+  height: 1.5rem;
+  background: var(--primary-color);
+  border-radius: 2px;
+}
+
+/* Form Grid Adjustments */
+.formgrid.grid {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.formgrid.grid .col-12,
+.formgrid.grid .col-6 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* Section Headers */
+.profile-form h4 {
+  color: var(--primary-color);
+  margin: 1.5rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary-100);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.profile-form h4::before {
+  content: '';
+  width: 4px;
+  height: 1.5rem;
+  background: var(--primary-color);
+  border-radius: 2px;
+}
+
+/* Error States */
+.p-error {
+  color: var(--red-500);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* Loading States */
+.profile-form.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Button Styling */
+.profile-form .p-button {
+  transition: all 0.3s ease;
+}
+
+.profile-form .p-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-profile-container {
+    padding: 0.5rem;
+  }
+  
+  .profile-card {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+  
+  .profile-name {
+    font-size: 1.5rem;
+  }
+  
+  .profile-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .formgrid.grid .col-12.md:col-6 {
+    width: 100%;
+  }
+  
+  .password-change-section {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-card {
+    padding: 0.75rem;
+  }
+  
+  .profile-header {
+    padding: 0.5rem 0 1rem;
+  }
+  
+  .profile-name {
+    font-size: 1.25rem;
+  }
+  
+  .profile-form h4 {
+    font-size: 1rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .profile-role {
+    background: var(--primary-900);
+    color: var(--primary-100);
+  }
+  
+  .password-change-section {
+    background: var(--surface-800);
+  }
+}
+
+/* Focus States */
+.profile-form .p-inputtext:focus,
+.profile-form .p-dropdown:focus-within,
+.profile-form .p-calendar:focus-within,
+.profile-form .p-inputtextarea:focus,
+.profile-form .p-password:focus-within {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* Animation for error messages */
+.p-error {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Checkbox Styling */
+.field-checkbox .p-checkbox .p-checkbox-box {
+  border: 2px solid #ced4da;
+}
+
+.field-checkbox .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+  border-color: var(--primary-color);
+}
+
+.field-checkbox .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+/* Calendar Customization */
+.p-calendar .p-inputtext {
+  padding-right: 2.5rem;
+}
+
+.p-calendar .p-datepicker-trigger {
+  color: var(--text-color-secondary);
+}
+
+.p-calendar .p-datepicker-trigger:hover {
+  color: var(--primary-color);
+}
+
+/* Textarea Styling */
+.p-inputtextarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Divider Styling */
+.p-divider.p-divider-horizontal {
+  margin: 2rem 0;
+}
+
+.p-divider.p-divider-horizontal:before {
+  border-top: 1px solid var(--surface-border);
+}
+
+/* Success States */
+.profile-form.success .field {
+  animation: successPulse 0.5s ease-out;
+}
+
+@keyframes successPulse {
+  0% { background-color: transparent; }
+  50% { background-color: rgba(var(--green-500-rgb), 0.1); }
+  100% { background-color: transparent; }
+}
+
+/* Disabled States */
+.profile-form .p-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .profile-role {
+    border: 1px solid var(--primary-color);
+  }
+  
+  .password-change-section {
+    border: 1px solid var(--surface-border);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .profile-form .p-button,
+  .p-error {
+    transition: none;
+    animation: none;
+  }
+}
