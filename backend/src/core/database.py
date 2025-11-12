@@ -51,13 +51,13 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
             await session.close()
 
 
-async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
     """
     Dependency function for FastAPI to get database session.
     
     Usage:
         @router.get("/")
-        async def get_items(db: AsyncSession = Depends(get_db_session)):
+        async def get_items(db: AsyncSession = Depends(get_db)):
             result = await db.execute(...)
     """
     async with get_async_session() as session:

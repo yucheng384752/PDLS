@@ -1,25 +1,11 @@
 """Email notification system for PDLS application"""
 
 import logging
-import smtplib
-import ssl
-from datetime import datetime
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
-from email import encoders
-from typing import List, Optional, Dict, Any, Union
-from pathlib import Path
-from jinja2 import Environment, FileSystemLoader, Template
-from dataclasses import dataclass
-import asyncio
-import aiofiles
-import aiosmtplib
+from typing import Optional
 
 from .config import settings
-from .logging import get_logger
 
-logger = get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 
 @dataclass
