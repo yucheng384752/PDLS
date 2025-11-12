@@ -124,99 +124,76 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 
 
 class RateLimitMiddleware(BaseHTTPMiddleware):
-    """Basic rate limiting middleware (Redis-based implementation would be added later)"""
+    """Redis-based rate limiting middleware"""
     
-    def __init__(self, app, max_requests: int = 100, window_minutes: int = 15):
+    def __init__(self, app, enable_rate_limiting: bool = True):
         super().__init__(app)
-        self.max_requests = max_requests
-        self.window_minutes = window_minutes
-        # Simple in-memory storage (should use Redis in production)
-        self.request_counts = {}
-        self.last_cleanup = time.time()
+        self.enable_rate_limiting = enable_rate_limiting and not settings.DEBUG
     
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
-        # Skip rate limiting for health checks and static files
-        if request.url.path in ["/health", "/metrics"] or request.url.path.startswith("/static"):
+        # Skip rate limiting for health checks, metrics, and static files
+        if (not self.enable_rate_limiting or 
+            request.url.path in ["/health", "/metrics", "/docs", "/redoc", "/openapi.json"] or 
+            request.url.path.startswith("/static")):
             return await call_next(request)
         
-        # Get client identifier
-        client_ip = self._get_client_ip(request)
-        
-        # Cleanup old entries periodically
-        current_time = time.time()
-        if current_time - self.last_cleanup > 300:  # Cleanup every 5 minutes
-            self._cleanup_old_entries(current_time)
-        
-        # Check rate limit
-        if self._is_rate_limited(client_ip, current_time):
-            log_security_event(
-                "rate_limit_exceeded",
-                ip_address=client_ip,
-                details={"path": request.url.path, "method": request.method},
-                severity="WARNING"
-            )
+        try:
+            # Determine rate limit rule based on endpoint
+            rule_name = self._get_rate_limit_rule(request)
             
-            from fastapi import HTTPException, status
-            raise HTTPException(
-                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
-                detail="Rate limit exceeded. Please try again later.",
-                headers={"Retry-After": str(self.window_minutes * 60)}
-            )
-        
-        # Record request
-        self._record_request(client_ip, current_time)
-        
-        return await call_next(request)
-    
-    def _get_client_ip(self, request: Request) -> str:
-        """Extract client IP address"""
-        forwarded_for = request.headers.get("X-Forwarded-For")
-        if forwarded_for:
-            return forwarded_for.split(",")[0].strip()
-        return request.client.host if request.client else "unknown"
-    
-    def _is_rate_limited(self, client_ip: str, current_time: float) -> bool:
-        """Check if client has exceeded rate limit"""
-        if client_ip not in self.request_counts:
-            return False
-        
-        window_start = current_time - (self.window_minutes * 60)
-        recent_requests = [
-            req_time for req_time in self.request_counts[client_ip]
-            if req_time > window_start
-        ]
-        
-        return len(recent_requests) >= self.max_requests
-    
-    def _record_request(self, client_ip: str, current_time: float):
-        """Record a request for rate limiting"""
-        if client_ip not in self.request_counts:
-            self.request_counts[client_ip] = []
-        
-        self.request_counts[client_ip].append(current_time)
-        
-        # Keep only requests within the window
-        window_start = current_time - (self.window_minutes * 60)
-        self.request_counts[client_ip] = [
-            req_time for req_time in self.request_counts[client_ip]
-            if req_time > window_start
-        ]
-    
-    def _cleanup_old_entries(self, current_time: float):
-        """Remove old entries from memory"""
-        window_start = current_time - (self.window_minutes * 60)
-        
-        for client_ip in list(self.request_counts.keys()):
-            self.request_counts[client_ip] = [
-                req_time for req_time in self.request_counts[client_ip]
-                if req_time > window_start
-            ]
+            # Check rate limit using Redis-based limiter
+            from .rate_limit import check_rate_limit
+            limit_info = await check_rate_limit(request, rule_name)
             
-            # Remove empty entries
-            if not self.request_counts[client_ip]:
-                del self.request_counts[client_ip]
+            # Process request
+            response = await call_next(request)
+            
+            # Add rate limit headers to response
+            from .rate_limit import add_rate_limit_headers
+            add_rate_limit_headers(response, limit_info)
+            
+            return response
+            
+        except Exception as e:
+            # If rate limiting fails, log error and continue (fail-open)
+            if "Rate limit exceeded" not in str(e):
+                logger.error(f"Rate limiting middleware error: {e}")
+            raise
+    
+    def _get_rate_limit_rule(self, request: Request) -> str:
+        """Determine appropriate rate limit rule for the request"""
+        path = request.url.path.lower()
+        method = request.method.lower()
         
-        self.last_cleanup = current_time
+        # Authentication endpoints
+        if "/auth/" in path:
+            if "login" in path:
+                return "auth_login"
+            elif "register" in path:
+                return "auth_register"
+            elif "reset" in path or "password" in path:
+                return "auth_reset_password"
+            else:
+                return "auth_login"  # Default for auth endpoints
+        
+        # File upload endpoints
+        if "/files/" in path and method in ["post", "put"]:
+            return "file_upload"
+        
+        # Search endpoints
+        if "/search" in path or "query" in path:
+            return "search"
+        
+        # Admin endpoints
+        if "/admin/" in path:
+            return "admin"
+        
+        # Public read-only endpoints
+        if method == "get" and any(public_path in path for public_path in ["/public/", "/docs/", "/health"]):
+            return "public"
+        
+        # Default rule for all other endpoints
+        return "default"
 
 
 class DatabaseHealthMiddleware(BaseHTTPMiddleware):
@@ -272,12 +249,10 @@ def setup_middleware(app: FastAPI) -> None:
     app.add_middleware(SecurityHeadersMiddleware)
     
     # 4. Rate Limiting Middleware
-    if not settings.DEBUG:
-        app.add_middleware(
-            RateLimitMiddleware,
-            max_requests=1000,  # Requests per window
-            window_minutes=15   # Time window in minutes
-        )
+    app.add_middleware(
+        RateLimitMiddleware,
+        enable_rate_limiting=not settings.DEBUG
+    )
     
     # 5. Request Logging Middleware
     app.add_middleware(RequestLoggingMiddleware)

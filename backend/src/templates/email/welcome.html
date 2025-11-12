@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歡迎加入 {{ app_name }}</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        .welcome-message {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .info-box {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border-left: 4px solid #4CAF50;
+            margin: 20px 0;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">{{ app_name }}</div>
+            <p>專業開發日誌記錄系統</p>
+        </div>
+        
+        <div class="welcome-message">
+            <h2>歡迎加入，{{ user_name }}！</h2>
+            <p>感謝您註冊 {{ app_name }}！我們很高興您能成為我們開發社群的一員。</p>
+        </div>
+        
+        <div class="info-box">
+            <h3>🚀 開始使用</h3>
+            <p>您的帳號已經準備就緒！點擊下方按鈕開始記錄您的開發歷程：</p>
+            <div style="text-align: center;">
+                <a href="{{ login_url }}" class="button">立即登入</a>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3>📋 平台特色</h3>
+            <ul>
+                <li><strong>開發日誌記錄</strong> - 詳細記錄每日開發進度和心得</li>
+                <li><strong>專案管理</strong> - 組織和追蹤多個開發專案</li>
+                <li><strong>團隊協作</strong> - 與團隊成員分享和討論開發內容</li>
+                <li><strong>進度分析</strong> - 視覺化展示開發進度和統計數據</li>
+                <li><strong>檔案管理</strong> - 安全儲存和管理開發相關檔案</li>
+            </ul>
+        </div>
+        
+        <div class="info-box">
+            <h3>💡 快速入門提示</h3>
+            <ol>
+                <li>完善您的個人資料設定</li>
+                <li>建立您的第一個開發專案</li>
+                <li>開始記錄您的第一篇開發日誌</li>
+                <li>邀請團隊成員一同協作</li>
+            </ol>
+        </div>
+        
+        <p>如果您有任何問題或需要協助，歡迎隨時聯繫我們的支援團隊。</p>
+        
+        <div class="footer">
+            <p>
+                此郵件由 {{ app_name }} 系統自動發送<br>
+                如需協助請聯繫: <a href="mailto:{{ support_email }}">{{ support_email }}</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

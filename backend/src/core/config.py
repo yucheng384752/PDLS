@@ -65,12 +65,17 @@ class Settings(BaseSettings):
     CELERY_RESULT_BACKEND: str = "redis://localhost:6379/2"
     
     # Email (for notifications)
-    SMTP_HOST: Optional[str] = None
+    SMTP_HOST: str = "localhost"
     SMTP_PORT: int = 587
-    SMTP_USER: Optional[str] = None
+    SMTP_USERNAME: Optional[str] = None
     SMTP_PASSWORD: Optional[str] = None
-    SMTP_TLS: bool = True
-    SMTP_SSL: bool = False
+    SMTP_USE_TLS: bool = True
+    SMTP_USE_SSL: bool = False
+    SMTP_FROM_EMAIL: str = "noreply@pdls.com"
+    SMTP_FROM_NAME: str = "PDLS 開發日誌系統"
+    
+    # Email notification settings
+    ENABLE_EMAIL_NOTIFICATIONS: bool = True
     
     # Logging
     LOG_LEVEL: str = "INFO"
