@@ -193,9 +193,16 @@ class User(BaseModel, StatusMixin):
     #     }
     # }
     
-    # Relationships (will be added when other models are created)
-    # projects = relationship("Project", back_populates="owner")
-    # logs = relationship("DevelopmentLog", back_populates="author")
+    # Project Relationships
+    # owned_projects = relationship("Project", foreign_keys="Project.owner_id", back_populates="owner")
+    # created_projects = relationship("Project", foreign_keys="Project.created_by", back_populates="creator")
+    # project_memberships = relationship("ProjectMember", back_populates="user")
+    # uploaded_project_files = relationship("ProjectFile", back_populates="uploader")
+    # sent_invitations = relationship("ProjectInvitation", foreign_keys="ProjectInvitation.inviter_id", back_populates="inviter")
+    # received_invitations = relationship("ProjectInvitation", foreign_keys="ProjectInvitation.invited_user_id", back_populates="invited_user")
+    
+    # Development Log Relationships (will be added when model is created)
+    # development_logs = relationship("DevelopmentLog", back_populates="author")
     
     def __repr__(self) -> str:
         return f"<User(id={self.id}, username='{self.username}', email='{self.email}')>"

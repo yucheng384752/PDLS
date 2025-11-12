@@ -363,3 +363,85 @@ def handle_database_error(exc: Exception, operation: str) -> None:
         raise ConflictError("Data integrity constraint violation", details={"operation": operation})
     else:
         raise DatabaseError(f"Database operation failed: {str(exc)}", operation)
+
+
+# Project-specific exceptions
+class ProjectNotFoundError(NotFoundError):
+    """Project not found error"""
+    
+    def __init__(self, project_id: int):
+        super().__init__("Project", project_id)
+
+
+class ProjectMemberNotFoundError(NotFoundError):
+    """Project member not found error"""
+    
+    def __init__(self, member_id: int):
+        super().__init__("Project member", member_id)
+
+
+class ProjectInvitationNotFoundError(NotFoundError):
+    """Project invitation not found error"""
+    
+    def __init__(self, invitation_id: int):
+        super().__init__("Project invitation", invitation_id)
+
+
+class ProjectFileNotFoundError(NotFoundError):
+    """Project file not found error"""
+    
+    def __init__(self, file_id: int):
+        super().__init__("Project file", file_id)
+
+
+class ProjectPermissionDeniedError(AuthorizationError):
+    """Project permission denied error"""
+    
+    def __init__(self, message: str = "Access denied to this project"):
+        super().__init__(message)
+
+
+class PermissionDeniedError(AuthorizationError):
+    """General permission denied error"""
+    
+    def __init__(self, message: str = "Permission denied"):
+        super().__init__(message)
+
+
+class InvalidOperationError(BusinessLogicError):
+    """Invalid operation error"""
+    
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
+class ProjectAccessDeniedError(AuthorizationError):
+    """Project access denied error"""
+    
+    def __init__(self, project_id: int, action: str = "access"):
+        message = f"Access denied to {action} project {project_id}"
+        super().__init__(message, details={"project_id": project_id, "action": action})
+
+
+class DuplicateProjectMemberError(ConflictError):
+    """Duplicate project member error"""
+    
+    def __init__(self, project_id: int, user_id: int):
+        message = f"User {user_id} is already a member of project {project_id}"
+        super().__init__(message, "ProjectMember", details={"project_id": project_id, "user_id": user_id})
+
+
+class InvitationExpiredError(BusinessLogicError):
+    """Invitation expired error"""
+    
+    def __init__(self, invitation_id: int):
+        message = f"Invitation {invitation_id} has expired"
+        super().__init__(message, details={"invitation_id": invitation_id})
+
+
+class InvitationAlreadyRespondedError(BusinessLogicError):
+    """Invitation already responded error"""
+    
+    def __init__(self, invitation_id: int, status: str):
+        message = f"Invitation {invitation_id} has already been {status}"
+        super().__init__(message, details={"invitation_id": invitation_id, "current_status": status})
