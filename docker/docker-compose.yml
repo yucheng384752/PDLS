@@ -1,0 +1,150 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: pdls-postgres
+    environment:
+      POSTGRES_DB: pdls
+      POSTGRES_USER: pdls_user
+      POSTGRES_PASSWORD: pdls_pass
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - pdls-network
+    restart: unless-stopped
+
+  # Redis for Celery
+  redis:
+    image: redis:7-alpine
+    container_name: pdls-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - pdls-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # MinIO Object Storage
+  minio:
+    image: minio/minio:latest
+    container_name: pdls-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: pdls_minio_user
+      MINIO_ROOT_PASSWORD: pdls_minio_pass
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - pdls-network
+    restart: unless-stopped
+
+  # PDLS Backend (FastAPI)
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../docker/backend.Dockerfile
+    container_name: pdls-backend
+    environment:
+      DATABASE_URL: postgresql://pdls_user:pdls_pass@postgres:5432/pdls
+      REDIS_URL: redis://redis:6379/0
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ACCESS_KEY: pdls_minio_user
+      MINIO_SECRET_KEY: pdls_minio_pass
+      SECRET_KEY: your-secret-key-change-in-production
+      ENVIRONMENT: development
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+      - minio
+    networks:
+      - pdls-network
+    restart: unless-stopped
+    profiles:
+      - full-stack
+
+  # Celery Worker
+  celery-worker:
+    build:
+      context: ../backend
+      dockerfile: ../docker/backend.Dockerfile
+    container_name: pdls-celery-worker
+    command: celery -A src.core.celery_app worker --loglevel=info
+    environment:
+      DATABASE_URL: postgresql://pdls_user:pdls_pass@postgres:5432/pdls
+      REDIS_URL: redis://redis:6379/0
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ACCESS_KEY: pdls_minio_user
+      MINIO_SECRET_KEY: pdls_minio_pass
+      SECRET_KEY: your-secret-key-change-in-production
+      ENVIRONMENT: development
+    depends_on:
+      - postgres
+      - redis
+      - minio
+    networks:
+      - pdls-network
+    restart: unless-stopped
+    profiles:
+      - full-stack
+
+  # Celery Beat (Scheduler)
+  celery-beat:
+    build:
+      context: ../backend
+      dockerfile: ../docker/backend.Dockerfile
+    container_name: pdls-celery-beat
+    command: celery -A src.core.celery_app beat --loglevel=info
+    environment:
+      DATABASE_URL: postgresql://pdls_user:pdls_pass@postgres:5432/pdls
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: your-secret-key-change-in-production
+      ENVIRONMENT: development
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - pdls-network
+    restart: unless-stopped
+    profiles:
+      - full-stack
+
+  # PDLS Frontend (React)
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ../docker/frontend.Dockerfile
+    container_name: pdls-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000/api/v1
+    networks:
+      - pdls-network
+    restart: unless-stopped
+    profiles:
+      - full-stack
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  minio_data:
+    driver: local
+
+networks:
+  pdls-network:
+    driver: bridge
