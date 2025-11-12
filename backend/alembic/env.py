@@ -11,7 +11,9 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from src.core.config import settings
-from src.models.base import Base
+from src.models import Base
+# Import all models to ensure they are registered with SQLAlchemy
+from src.models.user import User
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -34,7 +36,7 @@ target_metadata = Base.metadata
 
 def get_url():
     """Get database URL from settings"""
-    return settings.DATABASE_URL
+    return settings.DATABASE_SYNC_URL or settings.DATABASE_URL.replace("sqlite+aiosqlite://", "sqlite:///")
 
 
 def run_migrations_offline() -> None:
@@ -70,7 +72,7 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    configuration = config.get_section(config.config_ini_section)
+    configuration = config.get_section(config.config_ini_section) or {}
     configuration["sqlalchemy.url"] = get_url()
     
     connectable = engine_from_config(
