@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { PrimeReactProvider } from 'primereact/api';
-import { LoginForm } from './components/user/LoginForm';
-import { RegisterForm } from './components/user/RegisterForm';
+import LoginForm from './components/user/LoginForm';
+import RegisterForm from './components/user/RegisterForm';
 import { UserManagementPage } from './pages/UserManagementPage';
+import ProjectCreatePage from './pages/ProjectCreatePage';
+import ProjectDetailPage from './pages/ProjectDetailPage';
 import { useAuthStore } from './stores/authStore';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -135,9 +137,9 @@ const Dashboard: React.FC = () => {
           <div className="card-content">
             <h3>專案管理</h3>
             <p>建立和管理開發專案</p>
-            <span className="card-link disabled">
-              開發中 <i className="pi pi-clock"></i>
-            </span>
+            <a href="/projects/create" className="card-link">
+              建立專案 <i className="pi pi-arrow-right"></i>
+            </a>
           </div>
         </div>
         
@@ -204,6 +206,22 @@ const App: React.FC = () => {
               <ProtectedRoute>
                 <AppLayout>
                   <UserManagementPage />
+                </AppLayout>
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/projects/create" element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <ProjectCreatePage />
+                </AppLayout>
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/projects/:projectId" element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <ProjectDetailPage />
                 </AppLayout>
               </ProtectedRoute>
             } />
